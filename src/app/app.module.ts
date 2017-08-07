@@ -7,10 +7,12 @@ import { LoginFormComponent } from './login-form/login-form.component';
 import { FooterComponent } from './footer/footer.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { RouterModule, Routes } from '@angular/router';
+import { UserService } from './services/user.service';
+import { AuthguardGuard } from './services/authguard.guard';
 
 const appRoutes: Routes = [
   { path: '', component: LoginFormComponent },
-  { path: 'dashboard', component: DashboardComponent }
+  { path: 'dashboard', canActivate: [AuthguardGuard], component: DashboardComponent }
 ]
 
 @NgModule({
@@ -25,7 +27,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     BrowserModule
   ],
-  providers: [],
+  providers: [UserService, AuthguardGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
